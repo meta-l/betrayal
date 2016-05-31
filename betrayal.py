@@ -77,7 +77,7 @@ def relay_cmds(source_email, emails, bodyfile, subject):
             betray.send("rcpt to: " + i + "\r\n")
             sleep(sleeptime)
             if "550" in betray.recv(1024):
-                print ("%s{!} Unable to relay to %s, no such mailbox.%s") %(red,i,clear)
+                print ("%s{-} Unable to relay to %s, no such mailbox.%s") %(red,i,clear)
         betray.send("DATA\r\n")
         sleep(sleeptime)
         betray.send("Subject:" + subject + "\r\n")
@@ -95,7 +95,7 @@ def relay_cmds(source_email, emails, bodyfile, subject):
         sleep(sleeptime)
         betray.close()
     except Exception as e:
-        sys.exit("%s{!} Failed to open socket. (%s)%s" %(red,e,clear))
+        sys.exit("%s{-} Failed to open socket. (%s)%s" %(red,e,clear))
     file.close()
 
 
