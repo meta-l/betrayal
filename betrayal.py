@@ -53,7 +53,7 @@ def buildmagic():
 
 
 def checkfile(file):
-#   checks whether file exists
+#   checks whether file exists & is text
     if isfile(file):
         newmagic = buildmagic()
         mtype = newmagic.file(file)
