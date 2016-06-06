@@ -41,8 +41,8 @@ Quick fire SE email to an open relay, Version: %s
 #   oblig program banner
 
 
-#check type of file; used to make it compatible with both types of magic
 def buildmagic():
+#   checks type of file; used to make it compatible with both types of magic
     try:
         m = magic.open(magic.MAGIC_MIME_TYPE)
         m.load()
