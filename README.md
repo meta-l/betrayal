@@ -8,4 +8,5 @@ What is doesn't do: Can only use text files as message body. Plan is to get it t
 
 Version History:
 0.2 - included input file exist and magic check
+
 0.1 - Initial
