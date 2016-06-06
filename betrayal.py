@@ -141,13 +141,13 @@ def main():
     parser.add_argument('--targetfile', help="Soon to be customers (valid email address)", required=True)
     parser.add_argument('--source', help="The Important, Trustworthy Person(TM) (email address)", required=True)
     parser.add_argument('--subject', help="Email subject, in quotes", required=True)
-    parser.add_argument('--bodyfile', help="The sweet, sweet words of enchantment", required=True)
+    parser.add_argument('--bodyfile', help="The sweet, sweet, textual words of enchantment", required=True)
     args = parser.parse_args()
 
     relay_ip = args.openrelay
     relay_port = args.relayport
 
-#   check bodyfile exists
+#   check bodyfile exists & is text
     checkfile(args.bodyfile)
 
 #   check validity
