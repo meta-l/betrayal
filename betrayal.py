@@ -6,7 +6,7 @@
 # Version 0.2
 # Licence: WTFPL - wtfpl.net
 # Changelog
-# Ver 0.2 - included inputfile check
+# Ver 0.2 - included input file exist and magic check
 # Ver 0.1 - intial
 
 import socket
@@ -15,6 +15,7 @@ import argparse
 import re
 from os.path import isfile
 from time import sleep
+import magic
 
 __version__ = "0.2"
 
@@ -40,10 +41,26 @@ Quick fire SE email to an open relay, Version: %s
 #   oblig program banner
 
 
+#check type of file; used to make it compatible with both types of magic
+def buildmagic():
+    try:
+        m = magic.open(magic.MAGIC_MIME_TYPE)
+        m.load()
+    except AttributeError,e:
+        m = magic.Magic(mime=True)
+        m.file = m.from_file
+    return(m)
+
+
 def checkfile(file):
 #   checks whether file exists
     if isfile(file):
-        return True
+        newmagic = buildmagic()
+        mtype = newmagic.file(file)
+        if re.search("text/plain",mtype):
+            return True
+        else:
+            sys.exit("%s{!} File %s is not a text file%s" % (red,file,clear))
     else:
         sys.exit("%s{!} File '%s' does not exist%s" % (red,file,clear))
 
