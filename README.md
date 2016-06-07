@@ -1,6 +1,8 @@
 # betrayal
 Simple internal mail relay abuse script
 
+Came from being on site once, and having to do it all by hand to multiple recipients. Never again! :)
+
 Takes list of target email addresses, text file with mail body
 and source email address. Best used with SET and trojan'd login page
 
