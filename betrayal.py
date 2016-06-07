@@ -165,7 +165,7 @@ def main():
 #   everything ok? Here we go!
     if checkmailsyntax(args.source):
         if checkrelay(relay_ip, relay_port):
-            print ("%s{+} Sending FROM %s %s" %(green,args.source,clear))
+            print ("%s{+} Sending FROM %s %s" % (green,args.source,clear))
             relay_cmds(args.source, valid_emails, args.bodyfile, args.subject)
             print ("\n%s{!} Duplicity complete. Expect good news.%s" % (cyan,clear))
         else:
