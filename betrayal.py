@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 # simple mail relay abuse script
 # Will take list of target email addresses, text file with mail body
 # and source email address. Best used with SET and trojan'd login page
